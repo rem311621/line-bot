@@ -1,0 +1,16 @@
+{
+  "name": "line-bot-test",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node ."
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@line/bot-sdk": "^7.3.0",
+    "dotenv": "^9.0.2",
+    "express": "^4.17.1"
+  }
+}
