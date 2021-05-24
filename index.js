@@ -54,9 +54,14 @@ function handleEvent(event) {
       stickerId: "1",
     });
   }
-
+  (async function () {
+    const res = await db.collection("messages").add({
+      contents: event.message.text,
+    });
+    console.log("Added document with ID: ", res.id);
+  })();
   // create a echoing text message
-  const echo = { type: "text", text: event.message.text };
+  //const echo = { type: "text", text: event.message.text };
 
   const flexmessage = {
     type: "flex",
