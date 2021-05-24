@@ -2,6 +2,22 @@
 
 const line = require("@line/bot-sdk");
 const express = require("express");
+var admin = require("firebase-admin");
+
+var serviceAccount = require("./test-line-bot-e06b0-firebase-adminsdk-ytkpy-cb6f919950.json");
+
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+});
+const db = admin.firestore();
+
+(async function () {
+  const snapshot = await db.collection("user").get();
+  snapshot.forEach((doc) => {
+    console.log(doc.id, "=>", doc.data());
+  });
+})();
+
 require("dotenv").config();
 // create LINE SDK config from env variables
 const config = {
@@ -37,8 +53,238 @@ function handleEvent(event) {
   // create a echoing text message
   const echo = { type: "text", text: event.message.text };
 
+  const flexmessage = {
+    type: "carousel",
+    contents: [
+      {
+        type: "bubble",
+        hero: {
+          type: "image",
+          size: "full",
+          aspectRatio: "20:13",
+          aspectMode: "cover",
+          url: "https://scdn.line-apps.com/n/channel_devcenter/img/fx/01_5_carousel.png",
+        },
+        body: {
+          type: "box",
+          layout: "vertical",
+          spacing: "sm",
+          contents: [
+            {
+              type: "text",
+              text: "Arm Chair, White",
+              wrap: true,
+              weight: "bold",
+              size: "xl",
+            },
+            {
+              type: "box",
+              layout: "baseline",
+              contents: [
+                {
+                  type: "text",
+                  text: "$49",
+                  wrap: true,
+                  weight: "bold",
+                  size: "xl",
+                  flex: 0,
+                },
+                {
+                  type: "text",
+                  text: ".99",
+                  wrap: true,
+                  weight: "bold",
+                  size: "sm",
+                  flex: 0,
+                },
+              ],
+            },
+          ],
+        },
+        footer: {
+          type: "box",
+          layout: "vertical",
+          spacing: "sm",
+          contents: [
+            {
+              type: "button",
+              style: "primary",
+              action: {
+                type: "uri",
+                label: "Add to Cart",
+                uri: "https://linecorp.com",
+              },
+            },
+            {
+              type: "button",
+              action: {
+                type: "uri",
+                label: "Add to wishlist",
+                uri: "https://linecorp.com",
+              },
+            },
+          ],
+        },
+      },
+      {
+        type: "bubble",
+        hero: {
+          type: "image",
+          size: "full",
+          aspectRatio: "20:13",
+          aspectMode: "cover",
+          url: "https://scdn.line-apps.com/n/channel_devcenter/img/fx/01_6_carousel.png",
+        },
+        body: {
+          type: "box",
+          layout: "vertical",
+          spacing: "sm",
+          contents: [
+            {
+              type: "text",
+              text: "Metal Desk Lamp",
+              wrap: true,
+              weight: "bold",
+              size: "xl",
+            },
+            {
+              type: "box",
+              layout: "baseline",
+              flex: 1,
+              contents: [
+                {
+                  type: "text",
+                  text: "$11",
+                  wrap: true,
+                  weight: "bold",
+                  size: "xl",
+                  flex: 0,
+                },
+                {
+                  type: "text",
+                  text: ".99",
+                  wrap: true,
+                  weight: "bold",
+                  size: "sm",
+                  flex: 0,
+                },
+              ],
+            },
+            {
+              type: "text",
+              text: "Temporarily out of stock",
+              wrap: true,
+              size: "xxs",
+              margin: "md",
+              color: "#ff5551",
+              flex: 0,
+            },
+          ],
+        },
+        footer: {
+          type: "box",
+          layout: "vertical",
+          spacing: "sm",
+          contents: [
+            {
+              type: "button",
+              flex: 2,
+              style: "primary",
+              color: "#aaaaaa",
+              action: {
+                type: "uri",
+                label: "Add to Cart",
+                uri: "https://linecorp.com",
+              },
+            },
+            {
+              type: "button",
+              action: {
+                type: "uri",
+                label: "Add to wish list",
+                uri: "https://linecorp.com",
+              },
+            },
+          ],
+        },
+      },
+      {
+        type: "bubble",
+        hero: {
+          type: "image",
+          url: "https://scdn.line-apps.com/n/channel_devcenter/img/fx/01_1_cafe.png",
+          size: "full",
+          aspectRatio: "20:13",
+          aspectMode: "cover",
+        },
+        body: {
+          type: "box",
+          layout: "vertical",
+          spacing: "sm",
+          contents: [
+            {
+              type: "text",
+              text: "Metal Desk Lamp",
+              wrap: true,
+              weight: "bold",
+              size: "xl",
+            },
+            {
+              type: "box",
+              layout: "baseline",
+              flex: 1,
+              contents: [
+                {
+                  type: "text",
+                  text: "$11",
+                  wrap: true,
+                  weight: "bold",
+                  size: "xl",
+                  flex: 0,
+                },
+                {
+                  type: "text",
+                  text: ".99",
+                  wrap: true,
+                  weight: "bold",
+                  size: "sm",
+                  flex: 0,
+                },
+              ],
+            },
+          ],
+        },
+        footer: {
+          type: "box",
+          layout: "vertical",
+          spacing: "sm",
+          contents: [
+            {
+              type: "button",
+              flex: 2,
+              style: "primary",
+              action: {
+                type: "uri",
+                label: "Add to Cart",
+                uri: "https://linecorp.com",
+              },
+            },
+            {
+              type: "button",
+              action: {
+                type: "uri",
+                label: "Add to wish list",
+                uri: "https://linecorp.com",
+              },
+            },
+          ],
+        },
+      },
+    ],
+  };
+
   // use reply API
-  return client.replyMessage(event.replyToken, echo);
+  return client.replyMessage(event.replyToken, flexmessage);
 }
 
 // listen on port
