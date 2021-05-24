@@ -55,7 +55,7 @@ function handleEvent(event) {
 
   const flexmessage = {
     type: "carousel",
-    contents: [
+    text: [
       {
         type: "bubble",
         hero: {
