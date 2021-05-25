@@ -54,6 +54,13 @@ function handleEvent(event) {
       stickerId: "1",
     });
   }
+  if (event.message.text === "liff") {
+    const liff = {
+      type: "text",
+      text: "https://liff.line.me/1656026157-Mbq18dv6",
+    };
+    return client.replyMessage(event.replyToken, liff);
+  }
   (async function () {
     const res = await db.collection("messages").add({
       contents: event.message.text,
