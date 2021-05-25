@@ -54,13 +54,13 @@ function handleEvent(event) {
       stickerId: "1",
     });
   }
-  // if (event.message.text === "liff") {
-  //   const liff = {
-  //     type: "text",
-  //     text: "https://liff.line.me/1656026157-Mbq18dv6",
-  //   };
-  //   return client.replyMessage(event.replyToken, liff);
-  // }
+  if (event.message.text === "liff") {
+    const liff = {
+      type: "text",
+      text: "https://liff.line.me/1656026157-Mbq18dv6",
+    };
+    return client.replyMessage(event.replyToken, liff);
+  }
   (async function () {
     const res = await db.collection("messages").add({
       contents: event.message.text,
@@ -305,7 +305,7 @@ function handleEvent(event) {
   };
 
   // use reply API
-  return client.replyMessage(event.replyToken, echo);
+  return client.replyMessage(event.replyToken, flexmessage);
 }
 
 // listen on port
