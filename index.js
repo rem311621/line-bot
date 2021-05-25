@@ -68,7 +68,7 @@ function handleEvent(event) {
     console.log("Added document with ID: ", res.id);
   })();
   // create a echoing text message
-  //const echo = { type: "text", text: event.message.text };
+  const echo = { type: "text", text: event.message.text };
 
   const flexmessage = {
     type: "flex",
@@ -305,7 +305,7 @@ function handleEvent(event) {
   };
 
   // use reply API
-  return client.replyMessage(event.replyToken, flexmessage);
+  return client.replyMessage(event.replyToken, echo);
 }
 
 // listen on port
