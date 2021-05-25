@@ -305,7 +305,7 @@ function handleEvent(event) {
   };
 
   // use reply API
-  return client.replyMessage(event.replyToken, flexmessage);
+  return client.replyMessage(event.replyToken, echo);
 }
 
 // listen on port
