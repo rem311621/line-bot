@@ -3,11 +3,11 @@
 const line = require("@line/bot-sdk");
 const express = require("express");
 var admin = require("firebase-admin");
-
-var serviceAccount = require("./test-line-bot-e06b0-firebase-adminsdk-ytkpy-cb6f919950.json");
+import firebase_Api from "./firebase_Api";
+//var serviceAccount = require("./test-line-bot-e06b0-firebase-adminsdk-ytkpy-cb6f919950.json");
 
 admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount),
+  credential: admin.credential.cert(firebase_Api),
 });
 const db = admin.firestore();
 
