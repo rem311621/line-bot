@@ -43,6 +43,7 @@ function handleEvent(event) {
     .get()
     .then((querySnapshot) => {
       querySnapshot.forEach((doc) => {
+        console.log("found");
         console.log(doc.id, " => ", doc.data());
       });
     })
