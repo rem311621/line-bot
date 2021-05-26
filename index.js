@@ -62,7 +62,9 @@ function handleEvent(event) {
         const infor_Message = doc.data();
         return client.replyMessage(event.replyToken, infor_Message);
       });
-    })();
+    }.catch(function (error) {
+      console.log(error);
+    }));
   }
 
   (async function () {
