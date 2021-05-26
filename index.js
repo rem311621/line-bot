@@ -59,7 +59,7 @@ function handleEvent(event) {
       const snapshot = await db.collection("Information").get();
       snapshot.forEach((doc) => {
         console.log(doc.id, "=>", doc.data().Name);
-        const db_name = doc.data().Name;
+        showData(doc.data());
       });
       return client.replyMessage(event.replyToken, db_name);
     })();
@@ -79,233 +79,112 @@ function handleEvent(event) {
       type: "flex",
       altText: "This is a Flex Message",
       contents: {
-        type: "carousel",
-        contents: [
-          {
-            type: "bubble",
-            hero: {
-              type: "image",
-              size: "full",
-              aspectRatio: "20:13",
-              aspectMode: "cover",
-              url: "https://scdn.line-apps.com/n/channel_devcenter/img/fx/01_5_carousel.png",
+        type: "bubble",
+        body: {
+          type: "box",
+          layout: "vertical",
+          contents: [
+            {
+              type: "text",
+              text: "Information",
+              align: "center",
+              margin: "md",
+              size: "xxl",
+              weight: "bold",
+              color: "#1DB446",
             },
-            body: {
+            {
+              type: "separator",
+              margin: "xl",
+            },
+            {
               type: "box",
               layout: "vertical",
-              spacing: "sm",
               contents: [
                 {
-                  type: "text",
-                  text: "Arm Chair, White",
-                  wrap: true,
-                  weight: "bold",
-                  size: "xl",
-                },
-                {
                   type: "box",
-                  layout: "baseline",
+                  layout: "horizontal",
                   contents: [
                     {
                       type: "text",
-                      text: "$49",
-                      wrap: true,
+                      text: "姓名",
+                      align: "center",
                       weight: "bold",
-                      size: "xl",
-                      flex: 0,
                     },
                     {
                       type: "text",
-                      text: ".99",
-                      wrap: true,
+                      text: "張世明",
+                      align: "center",
+                    },
+                  ],
+                },
+                {
+                  type: "separator",
+                  margin: "lg",
+                },
+                {
+                  type: "box",
+                  layout: "horizontal",
+                  contents: [
+                    {
+                      type: "text",
+                      text: "地址",
+                      align: "center",
                       weight: "bold",
-                      size: "sm",
-                      flex: 0,
+                    },
+                    {
+                      type: "text",
+                      text: "張世明",
+                      align: "center",
+                    },
+                  ],
+                },
+                {
+                  type: "separator",
+                  margin: "lg",
+                },
+                {
+                  type: "box",
+                  layout: "horizontal",
+                  contents: [
+                    {
+                      type: "text",
+                      text: "電話",
+                      align: "center",
+                      weight: "bold",
+                    },
+                    {
+                      type: "text",
+                      text: "張世明",
+                      align: "center",
+                    },
+                  ],
+                },
+                {
+                  type: "separator",
+                  margin: "lg",
+                },
+                {
+                  type: "box",
+                  layout: "horizontal",
+                  contents: [
+                    {
+                      type: "text",
+                      text: "付款方式",
+                      align: "center",
+                      weight: "bold",
+                    },
+                    {
+                      type: "text",
+                      align: "center",
+                      text: "張世明",
                     },
                   ],
                 },
               ],
             },
-            footer: {
-              type: "box",
-              layout: "vertical",
-              spacing: "sm",
-              contents: [
-                {
-                  type: "button",
-                  style: "primary",
-                  action: {
-                    type: "uri",
-                    label: "Add to Cart",
-                    uri: "https://linecorp.com",
-                  },
-                },
-                {
-                  type: "button",
-                  action: {
-                    type: "uri",
-                    label: "Add to wishlist",
-                    uri: "https://linecorp.com",
-                  },
-                },
-              ],
-            },
-          },
-          {
-            type: "bubble",
-            hero: {
-              type: "image",
-              size: "full",
-              aspectRatio: "20:13",
-              aspectMode: "cover",
-              url: "https://scdn.line-apps.com/n/channel_devcenter/img/fx/01_6_carousel.png",
-            },
-            body: {
-              type: "box",
-              layout: "vertical",
-              spacing: "sm",
-              contents: [
-                {
-                  type: "text",
-                  text: "Metal Desk Lamp",
-                  wrap: true,
-                  weight: "bold",
-                  size: "xl",
-                },
-                {
-                  type: "box",
-                  layout: "baseline",
-                  flex: 1,
-                  contents: [
-                    {
-                      type: "text",
-                      text: "$11",
-                      wrap: true,
-                      weight: "bold",
-                      size: "xl",
-                      flex: 0,
-                    },
-                    {
-                      type: "text",
-                      text: ".99",
-                      wrap: true,
-                      weight: "bold",
-                      size: "sm",
-                      flex: 0,
-                    },
-                  ],
-                },
-                {
-                  type: "text",
-                  text: "Temporarily out of stock",
-                  wrap: true,
-                  size: "xxs",
-                  margin: "md",
-                  color: "#ff5551",
-                  flex: 0,
-                },
-              ],
-            },
-            footer: {
-              type: "box",
-              layout: "vertical",
-              spacing: "sm",
-              contents: [
-                {
-                  type: "button",
-                  flex: 2,
-                  style: "primary",
-                  color: "#aaaaaa",
-                  action: {
-                    type: "uri",
-                    label: "Add to Cart",
-                    uri: "https://linecorp.com",
-                  },
-                },
-                {
-                  type: "button",
-                  action: {
-                    type: "uri",
-                    label: "Add to wish list",
-                    uri: "https://linecorp.com",
-                  },
-                },
-              ],
-            },
-          },
-          {
-            type: "bubble",
-            hero: {
-              type: "image",
-              url: "https://scdn.line-apps.com/n/channel_devcenter/img/fx/01_1_cafe.png",
-              size: "full",
-              aspectRatio: "20:13",
-              aspectMode: "cover",
-            },
-            body: {
-              type: "box",
-              layout: "vertical",
-              spacing: "sm",
-              contents: [
-                {
-                  type: "text",
-                  text: "Metal Desk Lamp",
-                  wrap: true,
-                  weight: "bold",
-                  size: "xl",
-                },
-                {
-                  type: "box",
-                  layout: "baseline",
-                  flex: 1,
-                  contents: [
-                    {
-                      type: "text",
-                      text: "$11",
-                      wrap: true,
-                      weight: "bold",
-                      size: "xl",
-                      flex: 0,
-                    },
-                    {
-                      type: "text",
-                      text: ".99",
-                      wrap: true,
-                      weight: "bold",
-                      size: "sm",
-                      flex: 0,
-                    },
-                  ],
-                },
-              ],
-            },
-            footer: {
-              type: "box",
-              layout: "vertical",
-              spacing: "sm",
-              contents: [
-                {
-                  type: "button",
-                  flex: 2,
-                  style: "primary",
-                  action: {
-                    type: "uri",
-                    label: "Add to Cart",
-                    uri: "https://linecorp.com",
-                  },
-                },
-                {
-                  type: "button",
-                  action: {
-                    type: "uri",
-                    label: "Add to wish list",
-                    uri: "https://linecorp.com",
-                  },
-                },
-              ],
-            },
-          },
-        ],
+          ],
+        },
       },
     };
 
