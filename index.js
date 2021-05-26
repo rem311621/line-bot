@@ -52,7 +52,7 @@ async function handleEvent(event) {
   }
   let data;
   replyref.forEach((doc) => {
-    data = doc;
+    data = doc.data();
 
     //console.log(doc.id, " => ", doc.data());
   });
