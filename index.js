@@ -59,7 +59,7 @@ function handleEvent(event) {
       const snapshot = await db.collection("Information").get();
       snapshot.forEach((doc) => {
         console.log(doc.id, "=>", doc.data());
-        return client.replyToken(event.replyToken, doc.data());
+        return client.replyMessage(event.replyToken, doc.data());
       });
     })();
   }
