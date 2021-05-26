@@ -11,13 +11,6 @@ admin.initializeApp({
 });
 const db = admin.firestore();
 
-(async function () {
-  const snapshot = await db.collection("user").get();
-  snapshot.forEach((doc) => {
-    console.log(doc.id, "=>", doc.data());
-  });
-})();
-
 require("dotenv").config();
 // create LINE SDK config from env variables
 const config = {
@@ -60,6 +53,15 @@ function handleEvent(event) {
       text: "https://liff.line.me/1656026157-Mbq18dv6",
     };
     return client.replyMessage(event.replyToken, liff);
+  }
+  if (event.message.text === "show") {
+    (async function () {
+      const snapshot = await db.collection("Information").get();
+      snapshot.forEach((doc) => {
+        console.log(doc.id, "=>", doc.data());
+        return client.replyToken(event.replyToken, doc.data);
+      });
+    })();
   }
   (async function () {
     const res = await db.collection("messages").add({
