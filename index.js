@@ -54,14 +54,13 @@ function handleEvent(event) {
     };
     return client.replyMessage(event.replyToken, liff);
   }
+
   if (event.message.text === "show") {
     (async function () {
       const snapshot = await db.collection("Information").get();
       snapshot.forEach((doc) => {
         console.log(doc.id, "=>", doc.data().Name);
-        showData(doc.data());
       });
-      return client.replyMessage(event.replyToken, db_name);
     })();
   }
 
