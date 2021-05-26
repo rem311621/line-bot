@@ -1,7 +1,7 @@
-import serviceAccount from "./test-line-bot-e06b0-firebase-adminsdk-ytkpy-cb6f919950.json";
-import dotenv from "dotenv";
+const serviceAccount = require("./test-line-bot-e06b0-firebase-adminsdk-ytkpy-cb6f919950.json");
+const dotenv = require("dotenv");
 dotenv.config();
-export const firebaseApi = {
+module.exports = {
   type: serviceAccount.type,
   porjectId: serviceAccount.project_id,
   private_key_id: process.env.FIREBASE_KEY_ID,
