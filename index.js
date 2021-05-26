@@ -3,7 +3,7 @@
 const line = require("@line/bot-sdk");
 const express = require("express");
 var admin = require("firebase-admin");
-import firebase_Api from "./firebase_Api";
+const firebase_Api = require("./firebase_Api");
 //var serviceAccount = require("./test-line-bot-e06b0-firebase-adminsdk-ytkpy-cb6f919950.json");
 
 admin.initializeApp({
