@@ -5,7 +5,7 @@ module.exports = {
   type: serviceAccount.type,
   project_id: serviceAccount.project_id,
   private_key_id: process.env.FIREBASE_KEY_ID,
-  private_key: process.env.FIREBASE_KEY,
+  private_key: process.env.FIREBASE_KEY.replace(/\\n/g, "\n"),
   client_email: serviceAccount.client_email,
   client_id: serviceAccount.client_id,
   auth_uri: serviceAccount.auth_uri,
