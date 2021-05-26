@@ -3,7 +3,7 @@ const dotenv = require("dotenv");
 dotenv.config();
 module.exports = {
   type: serviceAccount.type,
-  porjectId: serviceAccount.project_id,
+  project_id: serviceAccount.project_id,
   private_key_id: process.env.FIREBASE_KEY_ID,
   private_key: process.env.FIREBASE_KEY,
   client_email: serviceAccount.client_email,
