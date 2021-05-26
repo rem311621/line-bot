@@ -46,7 +46,12 @@ function handleEvent(event) {
       console.log("found");
       querySnapshot.forEach((doc) => {
         console.log(doc.id, " => ", doc.data());
+        const replymsg = {
+          type: "text",
+          text: doc.data(),
+        };
       });
+      return client.replyMessage(event.replyToken, replymsg);
     })
     .catch((error) => {
       console.log("Error getting documents: ", error);
