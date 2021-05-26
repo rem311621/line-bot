@@ -40,11 +40,11 @@ app.post("/callback", line.middleware(config), (req, res) => {
 function handleEvent(event) {
   db.collection("Information")
     .where("Name", "==", event.message.text)
+    .limit(1)
     .get()
     .then((querySnapshot) => {
       console.log("found");
       querySnapshot.forEach((doc) => {
-        // doc.data() is never undefined for query doc snapshots
         console.log(doc.id, " => ", doc.data());
       });
     })
