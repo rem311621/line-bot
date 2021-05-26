@@ -37,148 +37,141 @@ app.post("/callback", line.middleware(config), (req, res) => {
 });
 
 // event handler
-function handleEvent(event) {
-  (async function () {
-    const replyref = await db
-      .collection("Information")
-      .where("Name", "==", event.message.text)
-      .limit(1)
-      .get();
-    if (replyref.empty) {
-      const errormsg = {
-        type: "text",
-        text: "抱歉沒有這個人哦",
-      };
-      return client.replyMessage(event.replyToken, errormsg);
-    }
+async function handleEvent(event) {
+  const replyref = await db
+    .collection("Information")
+    .where("Name", "==", event.message.text)
+    .limit(1)
+    .get();
+  if (replyref.empty) {
+    const errormsg = {
+      type: "text",
+      text: "抱歉沒有這個人哦",
+    };
+    return client.replyMessage(event.replyToken, errormsg);
   }
-    .then((querySnapshot) => {
-      console.log("found");
-      querySnapshot.forEach((doc) => {
-        const flexinfor = {
-          type: "flex",
-          altText: "This is a Flex Message",
-          contents: {
-            type: "bubble",
-            body: {
+
+  replyref.forEach((doc) => {
+    const flexinfor = {
+      type: "flex",
+      altText: "This is a Flex Message",
+      contents: {
+        type: "bubble",
+        body: {
+          type: "box",
+          layout: "vertical",
+          contents: [
+            {
+              type: "text",
+              text: "Information",
+              align: "center",
+              margin: "md",
+              size: "xxl",
+              weight: "bold",
+              color: "#1DB446",
+            },
+            {
+              type: "separator",
+              margin: "xl",
+            },
+            {
               type: "box",
               layout: "vertical",
               contents: [
                 {
-                  type: "text",
-                  text: "Information",
-                  align: "center",
-                  margin: "md",
-                  size: "xxl",
-                  weight: "bold",
-                  color: "#1DB446",
+                  type: "box",
+                  layout: "horizontal",
+                  contents: [
+                    {
+                      type: "text",
+                      text: "姓名",
+                      align: "center",
+                      weight: "bold",
+                    },
+                    {
+                      type: "text",
+                      text: doc.data().Name,
+                      align: "center",
+                    },
+                  ],
+                  paddingAll: "5px",
                 },
                 {
                   type: "separator",
-                  margin: "xl",
+                  margin: "lg",
                 },
                 {
                   type: "box",
-                  layout: "vertical",
+                  layout: "horizontal",
                   contents: [
                     {
-                      type: "box",
-                      layout: "horizontal",
-                      contents: [
-                        {
-                          type: "text",
-                          text: "姓名",
-                          align: "center",
-                          weight: "bold",
-                        },
-                        {
-                          type: "text",
-                          text: doc.data().Name,
-                          align: "center",
-                        },
-                      ],
-                      paddingAll: "5px",
+                      type: "text",
+                      text: "地址",
+                      align: "center",
+                      weight: "bold",
                     },
                     {
-                      type: "separator",
-                      margin: "lg",
-                    },
-                    {
-                      type: "box",
-                      layout: "horizontal",
-                      contents: [
-                        {
-                          type: "text",
-                          text: "地址",
-                          align: "center",
-                          weight: "bold",
-                        },
-                        {
-                          type: "text",
-                          text: doc.data().Addr,
-                          align: "center",
-                        },
-                      ],
-                      paddingAll: "5px",
-                    },
-                    {
-                      type: "separator",
-                      margin: "lg",
-                    },
-                    {
-                      type: "box",
-                      layout: "horizontal",
-                      contents: [
-                        {
-                          type: "text",
-                          text: "電話",
-                          align: "center",
-                          weight: "bold",
-                        },
-                        {
-                          type: "text",
-                          text: doc.data().Phone,
-                          align: "center",
-                        },
-                      ],
-                      paddingAll: "5px",
-                    },
-                    {
-                      type: "separator",
-                      margin: "lg",
-                    },
-                    {
-                      type: "box",
-                      layout: "horizontal",
-                      contents: [
-                        {
-                          type: "text",
-                          text: "付款方式",
-                          align: "center",
-                          weight: "bold",
-                        },
-                        {
-                          type: "text",
-                          align: "center",
-                          text: doc.data().Pay,
-                        },
-                      ],
-                      paddingAll: "5px",
+                      type: "text",
+                      text: doc.data().Addr,
+                      align: "center",
                     },
                   ],
+                  paddingAll: "5px",
+                },
+                {
+                  type: "separator",
+                  margin: "lg",
+                },
+                {
+                  type: "box",
+                  layout: "horizontal",
+                  contents: [
+                    {
+                      type: "text",
+                      text: "電話",
+                      align: "center",
+                      weight: "bold",
+                    },
+                    {
+                      type: "text",
+                      text: doc.data().Phone,
+                      align: "center",
+                    },
+                  ],
+                  paddingAll: "5px",
+                },
+                {
+                  type: "separator",
+                  margin: "lg",
+                },
+                {
+                  type: "box",
+                  layout: "horizontal",
+                  contents: [
+                    {
+                      type: "text",
+                      text: "付款方式",
+                      align: "center",
+                      weight: "bold",
+                    },
+                    {
+                      type: "text",
+                      align: "center",
+                      text: doc.data().Pay,
+                    },
+                  ],
+                  paddingAll: "5px",
                 },
               ],
             },
-          },
-        };
+          ],
+        },
+      },
+    };
 
-        console.log(doc.id, " => ", doc.data());
-        return client.replyMessage(event.replyToken, flexinfor);
-      });
-    })
-    .catch((error) => {
-      console.log("Error getting documents: ", error);
-    }));
+    console.log(doc.id, " => ", doc.data());
+    return await client.replyMessage(event.replyToken, flexinfor);
+  });
 
   // db.collection("Information")
   //   .where("Name", "==", event.message.text)
