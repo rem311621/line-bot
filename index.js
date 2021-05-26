@@ -84,103 +84,14 @@ function handleEvent(event) {
           layout: "vertical",
           contents: [
             {
-              type: "text",
-              text: "Information",
-              align: "center",
-              margin: "md",
-              size: "xxl",
-              weight: "bold",
-              color: "#1DB446",
-            },
-            {
-              type: "separator",
-              margin: "xl",
-            },
-            {
-              type: "box",
-              layout: "vertical",
-              contents: [
-                {
-                  type: "box",
-                  layout: "horizontal",
-                  contents: [
-                    {
-                      type: "text",
-                      text: "姓名",
-                      align: "center",
-                      weight: "bold",
-                    },
-                    {
-                      type: "text",
-                      text: "張世明",
-                      align: "center",
-                    },
-                  ],
-                },
-                {
-                  type: "separator",
-                  margin: "lg",
-                },
-                {
-                  type: "box",
-                  layout: "horizontal",
-                  contents: [
-                    {
-                      type: "text",
-                      text: "地址",
-                      align: "center",
-                      weight: "bold",
-                    },
-                    {
-                      type: "text",
-                      text: "張世明",
-                      align: "center",
-                    },
-                  ],
-                },
-                {
-                  type: "separator",
-                  margin: "lg",
-                },
-                {
-                  type: "box",
-                  layout: "horizontal",
-                  contents: [
-                    {
-                      type: "text",
-                      text: "電話",
-                      align: "center",
-                      weight: "bold",
-                    },
-                    {
-                      type: "text",
-                      text: "張世明",
-                      align: "center",
-                    },
-                  ],
-                },
-                {
-                  type: "separator",
-                  margin: "lg",
-                },
-                {
-                  type: "box",
-                  layout: "horizontal",
-                  contents: [
-                    {
-                      type: "text",
-                      text: "付款方式",
-                      align: "center",
-                      weight: "bold",
-                    },
-                    {
-                      type: "text",
-                      align: "center",
-                      text: "張世明",
-                    },
-                  ],
-                },
-              ],
+              type: "button",
+              action: {
+                type: "uri",
+                label: "輸入基本資料",
+                uri: "https://liff.line.me/1656026157-Mbq18dv6",
+              },
+              style: "primary",
+              color: "#000000",
             },
           ],
         },
