@@ -38,6 +38,18 @@ app.post("/callback", line.middleware(config), (req, res) => {
 
 // event handler
 function handleEvent(event) {
+  db.collection("Informarion")
+    .where("Name", "==", event.message.text)
+    .get()
+    .then((querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+        console.log(doc.id, " => ", doc.data());
+      });
+    })
+    .catch((error) => {
+      console.log("Error getting documents: ", error);
+    });
+
   if (event.type !== "message" || event.message.type !== "text") {
     // ignore non-text-message event
     //return Promise.resolve(null);
