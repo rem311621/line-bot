@@ -38,22 +38,13 @@ app.post("/callback", line.middleware(config), (req, res) => {
 
 // event handler
 function handleEvent(event) {
-  (async function () {
-    const res = await db
-      .collection("Informarion")
-      .where("Name", "==", event.message.text)
-      .get()
-      .then(() => {
-        console.log("found", res.id);
-      });
-    // console.log("Added document with ID: ", res.id);
-  })();
-  db.collection("Informarion")
+  db.collection("Information")
     .where("Name", "==", event.message.text)
     .get()
     .then((querySnapshot) => {
+      console.log("found");
       querySnapshot.forEach((doc) => {
-        console.log("found");
+        // doc.data() is never undefined for query doc snapshots
         console.log(doc.id, " => ", doc.data());
       });
     })
