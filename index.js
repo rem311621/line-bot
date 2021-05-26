@@ -45,34 +45,6 @@ function handleEvent(event) {
     .then((querySnapshot) => {
       console.log("found");
       querySnapshot.forEach((doc) => {
-        console.log(doc.id, " => ", doc.data());
-      });
-    })
-    .catch((error) => {
-      console.log("Error getting documents: ", error);
-    });
-
-  if (event.type !== "message" || event.message.type !== "text") {
-    // ignore non-text-message event
-    //return Promise.resolve(null);
-    return client.replyMessage(event.replyToken, {
-      type: "sticker",
-      packageId: "1",
-      stickerId: "1",
-    });
-  }
-  if (event.message.text === "liff") {
-    const liff = {
-      type: "text",
-      text: "https://liff.line.me/1656026157-Mbq18dv6",
-    };
-    return client.replyMessage(event.replyToken, liff);
-  }
-
-  if (event.message.text === "show") {
-    (async function () {
-      const snapshot = await db.collection("Information").get();
-      snapshot.forEach((doc) => {
         const flexinfor = {
           type: "flex",
           altText: "This is a Flex Message",
@@ -190,9 +162,35 @@ function handleEvent(event) {
           },
         };
 
-        console.log(doc.id, "=>", doc.data().Name);
+        console.log(doc.id, " => ", doc.data());
         return client.replyMessage(event.replyToken, flexinfor);
       });
+    })
+    .catch((error) => {
+      console.log("Error getting documents: ", error);
+    });
+
+  if (event.type !== "message" || event.message.type !== "text") {
+    // ignore non-text-message event
+    //return Promise.resolve(null);
+    return client.replyMessage(event.replyToken, {
+      type: "sticker",
+      packageId: "1",
+      stickerId: "1",
+    });
+  }
+  if (event.message.text === "liff") {
+    const liff = {
+      type: "text",
+      text: "https://liff.line.me/1656026157-Mbq18dv6",
+    };
+    return client.replyMessage(event.replyToken, liff);
+  }
+
+  if (event.message.text === "show") {
+    (async function () {
+      const snapshot = await db.collection("Information").get();
+      snapshot.forEach((doc) => {});
     })();
   }
 
