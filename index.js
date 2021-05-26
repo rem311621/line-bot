@@ -38,6 +38,18 @@ app.post("/callback", line.middleware(config), (req, res) => {
 
 // event handler
 function handleEvent(event) {
+  (async function () {
+    const res = await db
+      .collection("Informarion")
+      .where("Name", "==", event.message.text)
+      .get()
+      .then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          console.log("found");
+        });
+      });
+    // console.log("Added document with ID: ", res.id);
+  })();
   db.collection("Informarion")
     .where("Name", "==", event.message.text)
     .get()
@@ -51,6 +63,8 @@ function handleEvent(event) {
       console.log("Error getting documents: ", error);
     });
 
+
+    
   if (event.type !== "message" || event.message.type !== "text") {
     // ignore non-text-message event
     //return Promise.resolve(null);
