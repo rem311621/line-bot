@@ -50,129 +50,129 @@ async function handleEvent(event) {
     };
     return client.replyMessage(event.replyToken, errormsg);
   }
-
+  let data;
   replyref.forEach((doc) => {
-    const flexinfor = {
-      type: "flex",
-      altText: "This is a Flex Message",
-      contents: {
-        type: "bubble",
-        body: {
-          type: "box",
-          layout: "vertical",
-          contents: [
-            {
-              type: "text",
-              text: "Information",
-              align: "center",
-              margin: "md",
-              size: "xxl",
-              weight: "bold",
-              color: "#1DB446",
-            },
-            {
-              type: "separator",
-              margin: "xl",
-            },
-            {
-              type: "box",
-              layout: "vertical",
-              contents: [
-                {
-                  type: "box",
-                  layout: "horizontal",
-                  contents: [
-                    {
-                      type: "text",
-                      text: "姓名",
-                      align: "center",
-                      weight: "bold",
-                    },
-                    {
-                      type: "text",
-                      text: doc.data().Name,
-                      align: "center",
-                    },
-                  ],
-                  paddingAll: "5px",
-                },
-                {
-                  type: "separator",
-                  margin: "lg",
-                },
-                {
-                  type: "box",
-                  layout: "horizontal",
-                  contents: [
-                    {
-                      type: "text",
-                      text: "地址",
-                      align: "center",
-                      weight: "bold",
-                    },
-                    {
-                      type: "text",
-                      text: doc.data().Addr,
-                      align: "center",
-                    },
-                  ],
-                  paddingAll: "5px",
-                },
-                {
-                  type: "separator",
-                  margin: "lg",
-                },
-                {
-                  type: "box",
-                  layout: "horizontal",
-                  contents: [
-                    {
-                      type: "text",
-                      text: "電話",
-                      align: "center",
-                      weight: "bold",
-                    },
-                    {
-                      type: "text",
-                      text: doc.data().Phone,
-                      align: "center",
-                    },
-                  ],
-                  paddingAll: "5px",
-                },
-                {
-                  type: "separator",
-                  margin: "lg",
-                },
-                {
-                  type: "box",
-                  layout: "horizontal",
-                  contents: [
-                    {
-                      type: "text",
-                      text: "付款方式",
-                      align: "center",
-                      weight: "bold",
-                    },
-                    {
-                      type: "text",
-                      align: "center",
-                      text: doc.data().Pay,
-                    },
-                  ],
-                  paddingAll: "5px",
-                },
-              ],
-            },
-          ],
-        },
-      },
-    };
+    data = doc;
 
-    console.log(doc.id, " => ", doc.data());
-    return await client.replyMessage(event.replyToken, flexinfor);
+    //console.log(doc.id, " => ", doc.data());
   });
-
+  const flexinfor = {
+    type: "flex",
+    altText: "This is a Flex Message",
+    contents: {
+      type: "bubble",
+      body: {
+        type: "box",
+        layout: "vertical",
+        contents: [
+          {
+            type: "text",
+            text: "Information",
+            align: "center",
+            margin: "md",
+            size: "xxl",
+            weight: "bold",
+            color: "#1DB446",
+          },
+          {
+            type: "separator",
+            margin: "xl",
+          },
+          {
+            type: "box",
+            layout: "vertical",
+            contents: [
+              {
+                type: "box",
+                layout: "horizontal",
+                contents: [
+                  {
+                    type: "text",
+                    text: "姓名",
+                    align: "center",
+                    weight: "bold",
+                  },
+                  {
+                    type: "text",
+                    text: data.Name,
+                    align: "center",
+                  },
+                ],
+                paddingAll: "5px",
+              },
+              {
+                type: "separator",
+                margin: "lg",
+              },
+              {
+                type: "box",
+                layout: "horizontal",
+                contents: [
+                  {
+                    type: "text",
+                    text: "地址",
+                    align: "center",
+                    weight: "bold",
+                  },
+                  {
+                    type: "text",
+                    text: data.Addr,
+                    align: "center",
+                  },
+                ],
+                paddingAll: "5px",
+              },
+              {
+                type: "separator",
+                margin: "lg",
+              },
+              {
+                type: "box",
+                layout: "horizontal",
+                contents: [
+                  {
+                    type: "text",
+                    text: "電話",
+                    align: "center",
+                    weight: "bold",
+                  },
+                  {
+                    type: "text",
+                    text: data.Phone,
+                    align: "center",
+                  },
+                ],
+                paddingAll: "5px",
+              },
+              {
+                type: "separator",
+                margin: "lg",
+              },
+              {
+                type: "box",
+                layout: "horizontal",
+                contents: [
+                  {
+                    type: "text",
+                    text: "付款方式",
+                    align: "center",
+                    weight: "bold",
+                  },
+                  {
+                    type: "text",
+                    align: "center",
+                    text: data.Pay,
+                  },
+                ],
+                paddingAll: "5px",
+              },
+            ],
+          },
+        ],
+      },
+    },
+  };
+  await client.replyMessage(event.replyToken, flexinfor);
   // db.collection("Information")
   //   .where("Name", "==", event.message.text)
   //   .limit(1)
