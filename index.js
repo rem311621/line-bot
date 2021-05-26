@@ -50,8 +50,8 @@ function handleEvent(event) {
           type: "text",
           text: doc.data(),
         };
+        return client.replyMessage(event.replyToken, replymsg);
       });
-      return client.replyMessage(event.replyToken, replymsg);
     })
     .catch((error) => {
       console.log("Error getting documents: ", error);
