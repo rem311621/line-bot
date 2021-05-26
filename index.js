@@ -38,6 +38,54 @@ app.post("/callback", line.middleware(config), (req, res) => {
 
 // event handler
 async function handleEvent(event) {
+  if (event.type !== "message" || event.message.type !== "text") {
+    // ignore non-text-message event
+    //return Promise.resolve(null);
+    return client.replyMessage(event.replyToken, {
+      type: "sticker",
+      packageId: "1",
+      stickerId: "1",
+    });
+  }
+
+  (async function () {
+    const res = await db.collection("messages").add({
+      contents: event.message.text,
+    });
+    console.log("Added document with ID: ", res.id);
+  })();
+
+  const echo = { type: "text", text: event.message.text };
+
+  if (event.message.text === "flex") {
+    const flexmessage = {
+      type: "flex",
+      altText: "This is a Flex Message",
+      contents: {
+        type: "bubble",
+        body: {
+          type: "box",
+          layout: "vertical",
+          contents: [
+            {
+              type: "button",
+              action: {
+                type: "uri",
+                label: "輸入基本資料",
+                uri: "https://liff.line.me/1656026157-Mbq18dv6",
+              },
+              style: "primary",
+              color: "#000000",
+            },
+          ],
+        },
+      },
+    };
+
+    // use reply API
+    return client.replyMessage(event.replyToken, flexmessage);
+  }
+
   const replyref = await db
     .collection("Information")
     .where("Name", "==", event.message.text)
@@ -53,8 +101,6 @@ async function handleEvent(event) {
   let data;
   replyref.forEach((doc) => {
     data = doc.data();
-
-    //console.log(doc.id, " => ", doc.data());
   });
   const flexinfor = {
     type: "flex",
@@ -173,199 +219,6 @@ async function handleEvent(event) {
     },
   };
   await client.replyMessage(event.replyToken, flexinfor);
-  // db.collection("Information")
-  //   .where("Name", "==", event.message.text)
-  //   .limit(1)
-  //   .get()
-  //   .then((querySnapshot) => {
-  //     console.log("found");
-  //     querySnapshot.forEach((doc) => {
-  //       const flexinfor = {
-  //         type: "flex",
-  //         altText: "This is a Flex Message",
-  //         contents: {
-  //           type: "bubble",
-  //           body: {
-  //             type: "box",
-  //             layout: "vertical",
-  //             contents: [
-  //               {
-  //                 type: "text",
-  //                 text: "Information",
-  //                 align: "center",
-  //                 margin: "md",
-  //                 size: "xxl",
-  //                 weight: "bold",
-  //                 color: "#1DB446",
-  //               },
-  //               {
-  //                 type: "separator",
-  //                 margin: "xl",
-  //               },
-  //               {
-  //                 type: "box",
-  //                 layout: "vertical",
-  //                 contents: [
-  //                   {
-  //                     type: "box",
-  //                     layout: "horizontal",
-  //                     contents: [
-  //                       {
-  //                         type: "text",
-  //                         text: "姓名",
-  //                         align: "center",
-  //                         weight: "bold",
-  //                       },
-  //                       {
-  //                         type: "text",
-  //                         text: doc.data().Name,
-  //                         align: "center",
-  //                       },
-  //                     ],
-  //                     paddingAll: "5px",
-  //                   },
-  //                   {
-  //                     type: "separator",
-  //                     margin: "lg",
-  //                   },
-  //                   {
-  //                     type: "box",
-  //                     layout: "horizontal",
-  //                     contents: [
-  //                       {
-  //                         type: "text",
-  //                         text: "地址",
-  //                         align: "center",
-  //                         weight: "bold",
-  //                       },
-  //                       {
-  //                         type: "text",
-  //                         text: doc.data().Addr,
-  //                         align: "center",
-  //                       },
-  //                     ],
-  //                     paddingAll: "5px",
-  //                   },
-  //                   {
-  //                     type: "separator",
-  //                     margin: "lg",
-  //                   },
-  //                   {
-  //                     type: "box",
-  //                     layout: "horizontal",
-  //                     contents: [
-  //                       {
-  //                         type: "text",
-  //                         text: "電話",
-  //                         align: "center",
-  //                         weight: "bold",
-  //                       },
-  //                       {
-  //                         type: "text",
-  //                         text: doc.data().Phone,
-  //                         align: "center",
-  //                       },
-  //                     ],
-  //                     paddingAll: "5px",
-  //                   },
-  //                   {
-  //                     type: "separator",
-  //                     margin: "lg",
-  //                   },
-  //                   {
-  //                     type: "box",
-  //                     layout: "horizontal",
-  //                     contents: [
-  //                       {
-  //                         type: "text",
-  //                         text: "付款方式",
-  //                         align: "center",
-  //                         weight: "bold",
-  //                       },
-  //                       {
-  //                         type: "text",
-  //                         align: "center",
-  //                         text: doc.data().Pay,
-  //                       },
-  //                     ],
-  //                     paddingAll: "5px",
-  //                   },
-  //                 ],
-  //               },
-  //             ],
-  //           },
-  //         },
-  //       };
-
-  //       console.log(doc.id, " => ", doc.data());
-  //       return client.replyMessage(event.replyToken, flexinfor);
-  //     });
-  //   })
-  //   .catch((error) => {
-  //     console.log("Error getting documents: ", error);
-  //   });
-
-  if (event.type !== "message" || event.message.type !== "text") {
-    // ignore non-text-message event
-    //return Promise.resolve(null);
-    return client.replyMessage(event.replyToken, {
-      type: "sticker",
-      packageId: "1",
-      stickerId: "1",
-    });
-  }
-  if (event.message.text === "liff") {
-    const liff = {
-      type: "text",
-      text: "https://liff.line.me/1656026157-Mbq18dv6",
-    };
-    return client.replyMessage(event.replyToken, liff);
-  }
-
-  if (event.message.text === "show") {
-    (async function () {
-      const snapshot = await db.collection("Information").get();
-      snapshot.forEach((doc) => {});
-    })();
-  }
-
-  (async function () {
-    const res = await db.collection("messages").add({
-      contents: event.message.text,
-    });
-    console.log("Added document with ID: ", res.id);
-  })();
-  // create a echoing text message
-  const echo = { type: "text", text: event.message.text };
-
-  if (event.message.text === "flex") {
-    const flexmessage = {
-      type: "flex",
-      altText: "This is a Flex Message",
-      contents: {
-        type: "bubble",
-        body: {
-          type: "box",
-          layout: "vertical",
-          contents: [
-            {
-              type: "button",
-              action: {
-                type: "uri",
-                label: "輸入基本資料",
-                uri: "https://liff.line.me/1656026157-Mbq18dv6",
-              },
-              style: "primary",
-              color: "#000000",
-            },
-          ],
-        },
-      },
-    };
-
-    // use reply API
-    return client.replyMessage(event.replyToken, flexmessage);
-  }
 }
 
 // listen on port
