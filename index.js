@@ -43,10 +43,8 @@ function handleEvent(event) {
       .collection("Informarion")
       .where("Name", "==", event.message.text)
       .get()
-      .then((querySnapshot) => {
-        querySnapshot.forEach((doc) => {
-          console.log("found");
-        });
+      .then(() => {
+        console.log("found", res.id);
       });
     // console.log("Added document with ID: ", res.id);
   })();
@@ -63,8 +61,6 @@ function handleEvent(event) {
       console.log("Error getting documents: ", error);
     });
 
-
-    
   if (event.type !== "message" || event.message.type !== "text") {
     // ignore non-text-message event
     //return Promise.resolve(null);
