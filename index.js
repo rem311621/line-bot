@@ -57,7 +57,7 @@ async function handleEvent(event) {
 
   const echo = { type: "text", text: event.message.text };
 
-  if (event.message.text === "flex") {
+  if (event.message.text === "liff") {
     const flexmessage = {
       type: "flex",
       altText: "This is a Flex Message",
